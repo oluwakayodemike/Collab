@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat System Test</title>
+</head>
+<body>
+    <main>
+        <h1>Chat App</h1>
+
+        <div id="messages"></div>
+        <form id="form">
+            <input type="text" placeholder="Message goes in here..." id="input">
+            <button type="submit">Send</button>
+        </form>
+    </main>
+
+    <script>
+        const form = document.getElementById('form');
+        const input = document.getElementById('input');
+        const messages = document.getElementById('messages');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Get the message from the user input
+            const message = input.value.trim();
+
+            if (message !== '') {
+                // Create new message
+                const messageElement = document.createElement('div');
+                messageElement.textContent = message;
+
+                // Append message to container
+                messages.appendChild(messageElement);
+
+                // Clear inout
+                input.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
