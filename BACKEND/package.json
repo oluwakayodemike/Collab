@@ -1,0 +1,15 @@
+{
+  "name": "reatime-stuffs",
+  "version": "1.0.0",
+  "description": "Just testing some realtime with ablu",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ably": "^1.2.45",
+    "express": "^4.18.2"
+  }
+}
