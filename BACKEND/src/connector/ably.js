@@ -1,15 +1,16 @@
 require('dotenv').config();
 
-const Ably = require("ably");
-const ably = new Ably.Realtime.Promise({
-  authUrl: "https://ably.com/ably-auth/token/docs",
-});
+const Ably = require('ably');
 
-// wrapper for async functions
-const ablyRealtimePromiseExample = async () => {
-    
-  // Connect to Ably
-  await ably.connection.once("connected");
-  console.log("Connected to Ably!");
+async function connectToAbly() {
+  const ably = new Ably.Realtime.Promise(process.env.ABLY_API_KEY);
 
-};
+  try {
+    await ably.connection.once("connected");
+    console.log('Connected to Ably!');
+  } catch (error) {
+    console.error('Error connecting to Ably:', error);
+  }
+}
+
+connectToAbly(); 
