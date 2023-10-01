@@ -1,0 +1,37 @@
+body {
+    padding-top: 4rem;
+    padding-left: 5rem;
+}
+  
+.col-md-6 h1 {
+    text-align: left;
+}
+  
+.col-md-6 h1 br {
+    display: block;
+    margin-bottom: 1rem;
+}
+  
+.col-md-6 p {
+    font-size: 15px;
+    font-family: 'Exo', sans-serif;
+    padding-right: 7rem;
+    text-align: justify;
+    font-weight: lighter;
+}
+
+.col-md-6 .btn {
+    margin-right: 0.5rem;
+}
+
+.rounded-circle {
+    width: 400px;
+    height: auto;
+    justify-content: center;
+}
+
+.description-text p {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 15px;
+}
