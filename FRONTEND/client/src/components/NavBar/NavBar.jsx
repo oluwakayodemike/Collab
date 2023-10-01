@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './NavBar.css';
 
-const Navbar = () => {
+const NavBar = () => {
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
     const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -57,3 +57,5 @@ const Navbar = () => {
         </nav>
     );
 };
+
+export default NavBar
