@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import ImageSlider from '../ImageSlider/Slider';
 import './Home.css'
 
-import SlideOne from "../../assets/Homepage/Whiteboarding.svg";
+import slideOne from "../../assets/Homepage/Whiteboarding.svg";
+import slideTwo from "../../assets/Homepage/link-sharing.svg"
+import slideThree from "../../assets/Homepage/privacy.svg"
+
+
+const images = [
+  slideOne,
+  slideTwo,
+  slideThree,
+];
 
 const Home = () => {
     return (
@@ -21,7 +31,8 @@ const Home = () => {
             </div>
             <div className="col-md-6 description-text">
                 <div className="circle-container">
-                    <img src={SlideOne} alt="Circle Image" className="rounded-circle"/>
+                    {/* <img src={SlideOne} alt="Circle Image" className="rounded-circle"/> */}
+                    <ImageSlider images={images} className="rounded-circle" />
                 </div>
                 <div className="text-container">
                     <p>This is some text under the image.</p>
