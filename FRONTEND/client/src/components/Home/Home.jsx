@@ -35,7 +35,7 @@ const Home = () => {
                     <ImageSlider images={images} className="rounded-circle" />
                 </div>
                 <div className="text-container">
-                    <p>This is some text under the image.</p>
+                    <p>Just Descriptionssssssss</p>
                 </div>
             </div>
           </div>
