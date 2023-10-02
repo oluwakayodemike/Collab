@@ -25,8 +25,9 @@ const Home = () => {
                 Fuel creativity, brainstorm on ideas, and collaborate in real-time as a team using our revolutionary virtual collaboration space.
               </p>
               <div className="d-flex">
-                <button className="btn btn-primary mr-2">Join Meeting</button>
                 <button className="btn btn-success">Create Meeting</button>
+                <button className="btn btn-primary mr-2">Join Meeting</button>
+
               </div>
             </div>
             <div className="col-md-6 description-text">
