@@ -1,0 +1,32 @@
+.tool-bar {
+  padding-top: 160px; /* Adjust the padding as needed */
+  width: 50px; /* Adjust the width as needed */
+  height: 100%; /* Fills the entire height of the container */
+}
+  
+.rectangle {
+  display: flex;
+  flex-direction: column; /* Arranges text vertically */
+  align-items: center; /* Centers text horizontally */
+  justify-content: center; /* Centers text vertically */
+  height: 100%; /* Fills the entire height of the toolbar */
+  border: 2px solid #000;
+  border-radius: 10px;
+}
+
+.icon {
+  width: 25px; /* Adjust width as needed */
+  height: 25px; /* Adjust height as needed */
+  margin: 8px 0; /* Adjust margins as needed */
+}
+
+.icon2 {
+  width: 38px; /* Adjust width as needed */
+  height: 38px; /* Adjust height as needed */
+  margin: 8px 0; /* Adjust margins as needed */
+}
+
+.text {
+  font-size: 24px; /* Adjust the font size */
+  margin: 8px 0; /* Adjust the margin as needed */
+}

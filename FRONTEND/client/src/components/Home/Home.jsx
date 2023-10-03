@@ -16,7 +16,7 @@ const images = [
 
 const Home = () => {
     return (
-      <div>
+      <div className='home-container'>
         <NavBar />
         <div className="container mt-5">
           <div className="row">
@@ -35,11 +35,11 @@ const Home = () => {
             </div>
             <div className="col-md-6 description-text">
                 <div className="circle-container">
-                    {/* <img src={SlideOne} alt="Circle Image" className="rounded-circle"/> */}
-                    <ImageSlider images={images} className="rounded-circle" />
+                    {/* <img src={SlideOne} alt="circle image?" className="rounded-circle"/> */}
+                    <ImageSlider images={images} className="rounded-circle" style={{ borderRadius: '50%', border: '2px solid red' }} />
                 </div>
                 <div className="text-container">
-                    <p>Just Descriptionssssssss</p>
+                    <p>Different Texts, should be attached to each images here...</p>
                 </div>
             </div>
           </div>
