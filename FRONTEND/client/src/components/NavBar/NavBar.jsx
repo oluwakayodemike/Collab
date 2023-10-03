@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './NavBar.css';
-import { ThemeContext } from '../themeContext';
 
 const NavBar = () => {
     const [currentDateTime, setCurrentDateTime] = useState(new Date());

@@ -1,4 +1,4 @@
-body {
+.home-container {
     padding-top: 6rem;
     padding-left: 2rem;
 }
@@ -28,6 +28,8 @@ body {
     width: 350px;
     height: auto;
     justify-content: center;
+    border-radius: 50%;
+    border: 2px solid red;
 }
 
 .description-text p {
