@@ -6,6 +6,8 @@ import slideOne from "../../assets/Homepage/Whiteboarding.svg";
 import slideTwo from "../../assets/Homepage/link-sharing.svg"
 import slideThree from "../../assets/Homepage/privacy.svg"
 
+import Popup from '../Popup/Popup';
+import { useState } from 'react';
 
 const images = [
   slideOne,
@@ -14,6 +16,8 @@ const images = [
 ];
 
 const Home = () => {
+  const [showPopup, setShowPopup] = useState(false);
+
     return (
       <div>
         <NavBar />
@@ -27,7 +31,7 @@ const Home = () => {
                 Fuel creativity, brainstorm on ideas, and collaborate in real-time as a team using our revolutionary virtual collaboration space.
               </p>
               <div className="d-flex">
-                <button className="btn btn-success">Create Meeting</button>
+                <button className="btn btn-success" onClick={()=>setShowPopup(true)}>Create Meeting</button>
                 <button className="btn btn-primary mr-2">Join Meeting</button>
 
               </div>
@@ -41,6 +45,7 @@ const Home = () => {
                     <p>Just Descriptionssssssss</p>
                 </div>
             </div>
+            {showPopup && <Popup />}
           </div>
         </div>
       </div>
