@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import ImageSlider from '../ImageSlider/Slider';
 import './Home.css'
 import NavBar from '../NavBar/NavBar';
