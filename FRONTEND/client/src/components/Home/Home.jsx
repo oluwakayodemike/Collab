@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ImageSlider from '../ImageSlider/Slider';
 import './Home.css'
+import NavBar from '../NavBar/NavBar';
 
 import slideOne from "../../assets/Homepage/Whiteboarding.svg";
 import slideTwo from "../../assets/Homepage/link-sharing.svg"
@@ -15,6 +16,8 @@ const images = [
 
 const Home = () => {
     return (
+      <div>
+        <NavBar />
         <div className="container mt-5">
           <div className="row">
             <div className="col-md-6">
@@ -41,6 +44,7 @@ const Home = () => {
             </div>
           </div>
         </div>
+      </div>
     );
 };
 
