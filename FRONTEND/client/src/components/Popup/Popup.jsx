@@ -6,8 +6,6 @@ const Popup = () => {
   const [copySuccess, setCopySuccess] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(true);
 
-  // if isPopupOpen == true;
-  // setIs p
     const handleClosePopup = () => {
       setIsPopupOpen(false);
     };
