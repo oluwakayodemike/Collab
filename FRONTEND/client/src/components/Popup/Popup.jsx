@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import "./Popup.css";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FaClipboard } from "react-icons/fa";
-import generateMeetingCode from "./GenerateCode/Code"; // Import the function with .jsx extension
+import generateMeetingCode from "./GenerateCode/Code";
+import "./Popup.css";
 
 const Popup = ({ onClose }) => {
   const [copySuccess, setCopySuccess] = useState(false);
@@ -29,10 +30,12 @@ const Popup = ({ onClose }) => {
           </p>
           <div className="code-container">
             <h3 className="code">{meetingCode}</h3>
-            <button className="copy-button" onClick={() => setCopySuccess(true)}>
-              <FaClipboard />
-              {copySuccess ? "Copied" : "Copy"}
-            </button>
+            <CopyToClipboard text={meetingCode} onCopy={() => setCopySuccess(true)}>
+              <button className="copy-button">
+                <FaClipboard />
+                {copySuccess ? "Copied" : "Copy"}
+              </button>
+            </CopyToClipboard>
           </div>
           <button className="close-button" onClick={handleClosePopup}>
             Close
