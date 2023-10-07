@@ -23,6 +23,9 @@ const Popup = ({ onClose }) => {
     <>
       <div className="popup-container">
         <div className="popup">
+          <button className="close-button" onClick={handleClosePopup}>
+            &times;
+          </button>
           <h3 className="heading">Join the Session</h3>
           <p className="description">
             This is the room code for the Session. Share it with anyone you
@@ -37,9 +40,6 @@ const Popup = ({ onClose }) => {
               </button>
             </CopyToClipboard>
           </div>
-          <button className="close-button" onClick={handleClosePopup}>
-            Close
-          </button>
         </div>
       </div>
     </>
