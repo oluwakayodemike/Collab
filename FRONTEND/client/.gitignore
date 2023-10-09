@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# don't push files
+
+src/components/Room/Room.jsx
+src/components/Room/Room.css
