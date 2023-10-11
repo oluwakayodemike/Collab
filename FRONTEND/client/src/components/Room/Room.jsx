@@ -18,14 +18,14 @@ const Whiteboard = () => {
             <div>
                 < Board canvasRef={canvas} ctxRef={ctx} elements={elements} setElements={setElements} color={color} tool={tool}  />
             </div>
-            
+
             {/* set for "rect",  "pencil", "line", and circle */}
             <div className="toolbox">
                 <img
                     src={PencilIcon}
                     alt="Pencil Tool"
-                    onClick={() => handleToolClick("pencil")}
-                    className={tool === "pencil" ? "selected" : ""}
+                    onClick={() => handleToolClick("circle")}
+                    className={tool === "circle" ? "selected" : ""}
                 />
             </div>
 

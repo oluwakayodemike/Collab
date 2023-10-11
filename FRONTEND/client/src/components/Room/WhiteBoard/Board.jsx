@@ -4,7 +4,6 @@ import rough from "roughjs";
 const roughGenerator = rough.generator();
 
 const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
-    
     const [isDrawing, setIsDrawing] = useState(false);
 
     useEffect(() => {
@@ -18,7 +17,7 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
         ctx.lineCap = "round";
 
         ctxRef.current = ctx;
-    }, [])
+    }, []);
 
     useEffect(() => {
         ctxRef.current.strokeStyle = color;
@@ -27,29 +26,50 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
     useLayoutEffect(() => {
         const roughCanvas = rough.canvas(canvasRef.current);
 
-        if(elements.length > 0) {
+        if (elements.length > 0) {
             ctxRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         }
 
         elements.forEach((element) => {
             if (element.type === "rect") {
                 roughCanvas.draw(
-                    roughGenerator.rectangle( element.offsetX, element.offsetY, element.width, element.height, { stroke: element.stroke, strokeWidth: 5, roughness: 0, } )
+                    roughGenerator.rectangle(
+                        element.offsetX,
+                        element.offsetY,
+                        element.width,
+                        element.height,
+                        { stroke: element.stroke, strokeWidth: 2, roughness: 0 }
+                    )
                 );
-            }   else if(element.type === "line") {
+            } else if (element.type === "line") {
                 roughCanvas.draw(
-                    roughGenerator.line(element.offsetX, element.offsetY, element.width, element.height, { stroke: element.stroke, strokeWidth: 5, roughness: 0, })
+                    roughGenerator.line(
+                        element.offsetX,
+                        element.offsetY,
+                        element.width,
+                        element.height,
+                        { stroke: element.stroke, strokeWidth: 2, roughness: 0 }
+                    )
                 );
-            }   else if(element.type === "pencil") {
-                roughCanvas.linearPath(element.path, { stroke: element.stroke, strokeWidth: 2, roughness: 0, });
+            } else if (element.type === "pencil") {
+                roughCanvas.linearPath(element.path, { stroke: element.stroke, strokeWidth: 2, roughness: 0 });
+            } else if (element.type === "circle") {
+                roughCanvas.draw(
+                    roughGenerator.circle(
+                        element.offsetX,
+                        element.offsetY,
+                        element.diameter,
+                        { stroke: element.stroke, strokeWidth: 2, roughness: 0 }
+                    )
+                );
             }
         });
     }, [elements]);
 
     const handleMouseDown = (e) => {
-        const {offsetX, offsetY} = e.nativeEvent;
+        const { offsetX, offsetY } = e.nativeEvent;
 
-        if(tool === "pencil"){
+        if (tool === "pencil") {
             setElements((prevElements) => [
                 ...prevElements,
                 {
@@ -58,11 +78,9 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                     offsetY,
                     path: [[offsetX, offsetY]],
                     stroke: color,
-                }
+                },
             ]);
-        }
-
-        else if(tool === "line"){
+        } else if (tool === "line") {
             setElements((prevElements) => [
                 ...prevElements,
                 {
@@ -72,11 +90,9 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                     width: offsetX,
                     height: offsetY,
                     stroke: color,
-                }
-            ]);          
-        }
-
-        else if(tool === "rect"){
+                },
+            ]);
+        } else if (tool === "rect") {
             setElements((prevElements) => [
                 ...prevElements,
                 {
@@ -86,7 +102,18 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                     width: 0,
                     height: 0,
                     stroke: color,
-                }
+                },
+            ]);
+        } else if (tool === "circle") {
+            setElements((prevElements) => [
+                ...prevElements,
+                {
+                    type: "circle",
+                    offsetX,
+                    offsetY,
+                    diameter: 0,
+                    stroke: color,
+                },
             ]);
         }
 
@@ -94,11 +121,11 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
     };
 
     const handleMouseMove = (e) => {
-        const {offsetX, offsetY} = e.nativeEvent;
-        
-        if(isDrawing){
-            if ( tool === "pencil" ) {
-                const {path}  = elements[elements.length - 1];
+        const { offsetX, offsetY } = e.nativeEvent;
+
+        if (isDrawing) {
+            if (tool === "pencil") {
+                const { path } = elements[elements.length - 1];
                 const newPath = [...path, [offsetX, offsetY]];
 
                 if (tool === "pencil") {
@@ -114,8 +141,8 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                             }
                         })
                     );
-                };
-            }   else if (tool === "line") {
+                }
+            } else if (tool === "line") {
                 setElements((prevElements) =>
                     prevElements.map((ele, index) => {
                         if (index === prevElements.length - 1) {
@@ -129,7 +156,7 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                         }
                     })
                 );
-            }   else if (tool === "rect") {
+            } else if (tool === "rect") {
                 setElements((prevElements) =>
                     prevElements.map((ele, index) => {
                         if (index === prevElements.length - 1) {
@@ -143,14 +170,29 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                         }
                     })
                 );
+            } else if (tool === "circle") {
+                const { offsetX: startX, offsetY: startY } = elements[elements.length - 1];
+                const radius = Math.sqrt((offsetX - startX) ** 2 + (offsetY - startY) ** 2);
+
+                setElements((prevElements) =>
+                    prevElements.map((ele, index) => {
+                        if (index === prevElements.length - 1) {
+                            return {
+                                ...ele,
+                                diameter: radius * 2,
+                            };
+                        } else {
+                            return ele;
+                        }
+                    })
+                );
             }
         }
     };
 
-    const handleMouseUp = (e) => {
+    const handleMouseUp = () => {
         setIsDrawing(false);
-        
-    }
+    };
 
     return (
         <div
@@ -162,7 +204,6 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                 bottom: 0,
                 overflow: "hidden",
             }}
-    
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
