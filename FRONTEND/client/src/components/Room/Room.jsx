@@ -1,11 +1,17 @@
 import React, { useState, useRef } from 'react';
 import "./Room.css"
-import Board from "./WhiteBoard/Board"
-import PencilIcon from "../../assets/ToolBar/meeee.png"
+import Board from "./WhiteBoard/Board";
+import Select from "../../assets/ToolBar/select_cursor.svg";
+import Pencil from "../../assets/ToolBar/pencil.svg";
+import Circle from "../../assets/ToolBar/circle.svg";
+import Rectangle from "../../assets/ToolBar/rect.svg";
+
+// import Line from "../../assets/ToolBar/line.svg";
+
 const Whiteboard = () => {
     const canvas = useRef(null);
     const ctx = useRef(null);
-    const [tool, setTool] = useState("pencil");
+    const [tool, setTool] = useState("select");
     const [color, setColor] = useState("black");
     const [elements, setElements] = useState([]);
 
@@ -22,11 +28,32 @@ const Whiteboard = () => {
             {/* set for "rect",  "pencil", "line", and circle */}
             <div className="toolbox">
                 <img
-                    src={PencilIcon}
+                    src={Select}
+                    alt="Select Tool"
+                    onClick={() => handleToolClick("select")}
+                    className={tool === "select" ? "selected" : ""}
+                />
+                <div className="separator"></div>
+                <img
+                    src={Pencil}
                     alt="Pencil Tool"
+                    onClick={() => handleToolClick("pencil")}
+                    className={tool === "pencil" ? "selected" : ""}
+                />
+                <div className="separator"></div>
+                <img
+                    src={Circle}
+                    alt="Circle Tool"
                     onClick={() => handleToolClick("circle")}
                     className={tool === "circle" ? "selected" : ""}
                 />
+                <div className="separator"></div>
+                <img
+                    src={Rectangle}
+                    alt="Circle Tool"
+                    onClick={() => handleToolClick("rect")}
+                    className={tool === "rect" ? "selected" : ""}
+                />    
             </div>
 
             {/* color feature soon... */}

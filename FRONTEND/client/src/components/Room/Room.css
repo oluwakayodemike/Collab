@@ -3,19 +3,28 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
-  height: 100px;
+  width: auto;
+  height: 50px;
   background-color: white;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center; 
 }
   
 .toolbox img {
-  width: 100px;
-  height: 90px;
-  margin: px;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
   user-select: none;
+  margin-right: 10px;
 }
-  
+
+.separator {
+  height: 24px;
+  width: 1px;
+  background-color: #292727c7;
+  margin-right: 10px;
+}
