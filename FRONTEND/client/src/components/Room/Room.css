@@ -1,6 +1,6 @@
 .toolbox {
   bottom: 10px;
-  position: absolute;
+  position: fixed;
   left: 50%;
   transform: translateX(-50%);
   width: auto;

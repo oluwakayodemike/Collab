@@ -4,9 +4,8 @@ import Board from "./WhiteBoard/Board";
 import Select from "../../assets/ToolBar/select_cursor.svg";
 import Pencil from "../../assets/ToolBar/pencil.svg";
 import Circle from "../../assets/ToolBar/circle.svg";
-import Rectangle from "../../assets/ToolBar/rect.svg";
-
-// import Line from "../../assets/ToolBar/line.svg";
+import Rectangle from "../../assets/ToolBar/rectangle.svg";
+import Line from "../../assets/ToolBar/line1.svg";
 
 const Whiteboard = () => {
     const canvas = useRef(null);
@@ -53,7 +52,14 @@ const Whiteboard = () => {
                     alt="Circle Tool"
                     onClick={() => handleToolClick("rect")}
                     className={tool === "rect" ? "selected" : ""}
-                />    
+                />
+                <div className="separator"></div>
+                <img
+                    src={Line}
+                    alt="Line Tool"
+                    onClick={() => handleToolClick("line")}
+                    className={tool === "line" ? "selected" : ""}
+                />
             </div>
 
             {/* color feature soon... */}
