@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './NavBar.css';
+import { useNavigate } from 'react-router-dom';
+import { useUser, UserButton } from "@clerk/clerk-react";
+
 
 const NavBar = () => {
+    const user = useUser();
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
     const [isDarkMode, setIsDarkMode] = useState(false);
     // const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
@@ -38,6 +41,8 @@ const NavBar = () => {
     const dateClasses = `mr-2 ${isDarkMode ? 'text-light' : ''}`;
     const iconColor = isDarkMode ? 'white' : 'black';
 
+    const navigate = useNavigate();
+
     return (
         <nav className={`navbar navbar-expand-lg navbar-custom ${isDarkMode ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}>
             <div className="container">
@@ -52,7 +57,11 @@ const NavBar = () => {
                 onClick={toggleDarkMode}
                 />
                 <span className={`date ${dateClasses}`}>{formattedDate}</span>
-                <button className="btn btn-primary btn-signin">Sign In</button>
+                {user.isSignedIn ? (
+                    <UserButton className="user-button" />
+                ) : (
+                    <button className="btn btn-primary btn-signin" onClick={() => navigate('/sign-in')}>Sign In</button>
+                )}
             </div>
             </div>
         </nav>

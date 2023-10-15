@@ -8,8 +8,8 @@
 }
 
 .navbar-custom .navbar-brand {
-    font-size: 2px;
-    font-family: 'Pacifico', cursive;
+  font-size: 2px;
+  font-family: 'Pacifico', cursive;
 }
 
 .navbar-custom .fa-icon {
@@ -33,4 +33,17 @@
 
 .navbar-custom .btn-signin {
   margin-left: 10px;
+}
+
+.navbar-custom .ml-auto {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-custom .btn-signin {
+  margin-left: 10px;
+}
+
+.user-button {
+  margin-left: 20px;
 }
