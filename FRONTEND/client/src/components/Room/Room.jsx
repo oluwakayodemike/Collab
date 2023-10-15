@@ -19,11 +19,10 @@ const Whiteboard = () => {
     };
 
     return (
-        <div className='row'>
+        <div className='Board'>
             <div>
                 < Board canvasRef={canvas} ctxRef={ctx} elements={elements} setElements={setElements} color={color} tool={tool}  />
             </div>
-
             {/* set for "rect",  "pencil", "line", and circle */}
             <div className="toolbox">
                 <img

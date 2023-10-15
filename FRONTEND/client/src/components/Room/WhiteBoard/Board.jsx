@@ -111,6 +111,8 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                     type: "circle",
                     offsetX,
                     offsetY,
+                    width: 0,
+                    height: 0,
                     diameter: 0,
                     stroke: color,
                 },
@@ -180,6 +182,8 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                             return {
                                 ...ele,
                                 diameter: radius * 2,
+                                width: offsetX - ele.offsetX,
+                                height: offsetY - ele.offsetY,
                             };
                         } else {
                             return ele;

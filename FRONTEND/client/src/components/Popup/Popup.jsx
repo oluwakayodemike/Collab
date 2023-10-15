@@ -6,7 +6,7 @@ import "./Popup.css";
 
 const Popup = ({ onClose }) => {
   const [copySuccess, setCopySuccess] = useState(false);
-  const [meetingCode, setMeetingCode] = useState("");
+  const [roomID, setMeetingCode] = useState("");
 
   const handleClosePopup = () => {
     // Reset the meetingCode state and notify Home component when popup closes.
@@ -15,7 +15,7 @@ const Popup = ({ onClose }) => {
   };
 
   // call meetingGen when popup opens
-  if (meetingCode === "") {
+  if ( roomID === "") {
     setMeetingCode(generateMeetingCode());
   }
 
@@ -32,8 +32,8 @@ const Popup = ({ onClose }) => {
             want to invite.
           </p>
           <div className="code-container">
-            <h3 className="code">{meetingCode}</h3>
-            <CopyToClipboard text={meetingCode} onCopy={() => setCopySuccess(true)}>
+            <h3 className="code">{roomID}</h3>
+            <CopyToClipboard text={roomID} onCopy={() => setCopySuccess(true)}>
               <button className="copy-button">
                 <FaClipboard />
                 {copySuccess ? "Copied" : "Copy"}
