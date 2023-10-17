@@ -6,17 +6,23 @@ import slideOne from "../../assets/Homepage/Whiteboarding.svg";
 import slideTwo from "../../assets/Homepage/link-sharing.svg";
 import slideThree from "../../assets/Homepage/privacy.svg";
 import Popup from "../Popup/Popup";
+import JoinPopup from "../Popup/JoinPopup";
 
 const images = [slideOne, slideTwo, slideThree];
 
 const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
+  const [showJoinPopup, setShowJoinPopup] = useState(false);
 
   // handle PopupClose
   const handlePopupClose = () => {
     setShowPopup(false);
   };
 
+  const JoinPopupClose = () => {
+    setShowJoinPopup(false);
+  };
+  
   return (
     <div>
       <NavBar />
@@ -39,7 +45,7 @@ const Home = () => {
               >
                 Create Meeting
               </button>
-              <button className="btn btn-primary mr-2">Join Meeting</button>
+              <button className="btn btn-primary mr-2" onClick={setShowJoinPopup}>Join Meeting</button>
             </div>
           </div>
           <div className="col-md-6 description-text">
@@ -51,6 +57,7 @@ const Home = () => {
             </div>
           </div>
           {showPopup && <Popup onClose={handlePopupClose} />}
+          {showJoinPopup && <JoinPopup onClose={JoinPopupClose} />}
         </div>
       </div>
     </div>

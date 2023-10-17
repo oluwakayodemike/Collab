@@ -16,29 +16,29 @@ if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
 
 const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
 
-
 const App = () => {
   const navigate = useNavigate();
 
   return (
     <ClerkProvider
-    publishableKey={clerkPubKey}
-    navigate={(to) => navigate(to)}
+      publishableKey={clerkPubKey}
+      navigate={(to) => navigate(to)}
+      redirectTo="/"
     >
       <div>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sign-in/"
-            element={ 
-            <>
-              <SignedIn>
-                <Home />
-              </SignedIn>
-              <SignedOut>
-                 <RedirectToSignIn />
-              </SignedOut>
-            </>
-          }/>
+            element={
+              <>
+                <SignedIn>
+                  <Home />
+                </SignedIn>
+                <SignedOut>
+                  <RedirectToSignIn />
+                </SignedOut>
+              </>
+            }/>
 
           <Route path="/:id" element={<Room />} />
         </Routes>
