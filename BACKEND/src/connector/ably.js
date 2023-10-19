@@ -13,4 +13,4 @@ async function connectToAbly() {
   }
 }
 
-connectToAbly(); 
+connectToAbly();
