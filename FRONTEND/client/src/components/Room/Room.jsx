@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import "./Room.css"
+import Header from "./Header/Header"
 import Board from "./WhiteBoard/Board";
 import Select from "../../assets/ToolBar/select_cursor.svg";
 import Pencil from "../../assets/ToolBar/pencil.svg";
@@ -20,6 +21,7 @@ const Whiteboard = () => {
 
     return (
         <div className='Board'>
+            < Header />
             <div>
                 < Board canvasRef={canvas} ctxRef={ctx} elements={elements} setElements={setElements} color={color} tool={tool}  />
             </div>
