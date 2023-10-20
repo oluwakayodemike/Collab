@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useNavigate  } from "react-router-dom";
 import { FaClipboard } from "react-icons/fa";
+import { CgEnter } from "react-icons/cg"
 import generateMeetingCode from "./GenerateCode/Code";
 import "./Popup.css";
 
 const Popup = ({ onClose }) => {
   const [copySuccess, setCopySuccess] = useState(false);
   const [roomID, setMeetingCode] = useState("");
+  const [isNavigating, setIsNavigating] = useState(false);
+  const navigate = useNavigate();
 
   const handleClosePopup = () => {
     // Reset the meetingCode state and notify Home component when popup closes.
@@ -18,6 +22,13 @@ const Popup = ({ onClose }) => {
   if ( roomID === "") {
     setMeetingCode(generateMeetingCode());
   }
+
+  const handleEnterMeeting = () => {
+    setIsNavigating(true);
+    setTimeout(() => {
+      navigate(`/${roomID}`);
+    }, 3000);
+  };
 
   return (
     <>
@@ -39,6 +50,14 @@ const Popup = ({ onClose }) => {
                 {copySuccess ? "Copied" : "Copy"}
               </button>
             </CopyToClipboard>
+            {isNavigating ? (
+              <div className="loading-spinner"></div>
+            ) : (
+              <button className="join" onClick={handleEnterMeeting}>
+                <CgEnter style={{ fontSize: '20px', marginRight: '8px' }}/>
+                Enter
+              </button>
+            )}
           </div>
         </div>
       </div>

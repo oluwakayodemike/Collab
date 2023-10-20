@@ -3,7 +3,7 @@ import "./Header.css";
 
 const NavBar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light  custom-navbar">
+    <nav className="navbar navbar-expand-lg navbar-light custom-navbar">
       <div className="container">
       </div>
     </nav>
