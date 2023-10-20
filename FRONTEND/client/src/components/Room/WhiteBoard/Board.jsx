@@ -3,8 +3,16 @@ import rough from "roughjs";
 
 const roughGenerator = rough.generator();
 
+let idCounter = 0;
+
+function generateUniqueId(elementType) {
+  idCounter += 1;
+  return `${elementType}-${idCounter}`;
+}
+
 const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
     const [isDrawing, setIsDrawing] = useState(false);
+    const [selectedElementId, setSelectedElementId] = useState(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -63,63 +71,174 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                     )
                 );
             }
+
+            if (element.id === selectedElementId) {
+                if (element.type === "circle") {
+                    const selectionBoxX = element.offsetX - element.diameter / 2 - 5;
+                    const selectionBoxY = element.offsetY - element.diameter / 2 - 5;
+                    const selectionBoxWidth = element.diameter + 10;
+                    const selectionBoxHeight = element.diameter + 10;
+            
+                    ctxRef.current.strokeStyle = "blue";
+                    ctxRef.current.lineWidth = 2;
+                    ctxRef.current.strokeRect(
+                        selectionBoxX,
+                        selectionBoxY,
+                        selectionBoxWidth,
+                        selectionBoxHeight
+                    );
+                } else if (element.type === "line") {
+                    const lineWidth = ctxRef.current.lineWidth;
+                    const isPointNearLine = (x, y, element) => {
+                        const d = Math.abs(
+                            (element.height - element.offsetY) * x -
+                            (element.width - element.offsetX) * y +
+                            element.width * element.offsetY -
+                            element.height * element.offsetX
+                        ) / Math.sqrt(
+                            (element.height - element.offsetY) ** 2 +
+                            (element.width - element.offsetX) ** 2
+                        );
+                    
+                        return d <= lineWidth;
+                    };
+                    
+                    if (isPointNearLine(element.offsetX, element.offsetY, element)) {
+                        const selectionBoxX = Math.min(element.offsetX, element.width) - 5;
+                        const selectionBoxY = Math.min(element.offsetY, element.height) - 5;
+                        const selectionBoxWidth = Math.abs(element.width - element.offsetX) + 10;
+                        const selectionBoxHeight = Math.abs(element.height - element.offsetY) + 10;
+                    
+                        ctxRef.current.strokeStyle = "blue";
+                        ctxRef.current.lineWidth = 2;
+                        ctxRef.current.strokeRect(
+                            selectionBoxX,
+                            selectionBoxY,
+                            selectionBoxWidth,
+                            selectionBoxHeight
+                        );
+                    }
+                } else {
+                    const selectionBoxX = element.offsetX - 5;
+                    const selectionBoxY = element.offsetY - 5;
+                    const selectionBoxWidth = element.width + 10;
+                    const selectionBoxHeight = element.height + 10;
+            
+                    ctxRef.current.strokeStyle = "blue";
+                    ctxRef.current.lineWidth = 2;
+                    ctxRef.current.strokeRect(
+                        selectionBoxX,
+                        selectionBoxY,
+                        selectionBoxWidth,
+                        selectionBoxHeight
+                    );
+                }
+            }
         });
-    }, [elements]);
+    }, [elements, selectedElementId]);
 
     const handleMouseDown = (e) => {
         const { offsetX, offsetY } = e.nativeEvent;
 
-        if (tool === "pencil") {
-            setElements((prevElements) => [
-                ...prevElements,
-                {
-                    type: "pencil",
+        if (tool === "select") {
+            for (const element of elements) {
+                if (element.type === "line") {
+                    // Check if click point is near the line
+                    const isPointNearLine = (x, y, element) => {
+                        const d = Math.abs(
+                            (element.height - element.offsetY) * x -
+                            (element.width - element.offsetX) * y +
+                            element.width * element.offsetY -
+                            element.height * element.offsetX
+                        ) / Math.sqrt(
+                            (element.height - element.offsetY) ** 2 +
+                            (element.width - element.offsetX) ** 2
+                        );
+                        return d <= 5;
+                    };
+    
+                    if (isPointNearLine(offsetX, offsetY, element)) {
+                        setSelectedElementId(element.id);
+                        console.log(`You selected ${element.type}-${element.id}`);
+                        break;
+                    }
+                } else if (element.type === "circle") {
+                    const distance = Math.sqrt(
+                        (element.offsetX - offsetX) ** 2 + (element.offsetY - offsetY) ** 2
+                    );
+    
+                    if (distance <= element.diameter / 2) {
+                        setSelectedElementId(element.id);
+                        console.log(`You selected ${element.type}-${element.id}`);
+                        break;
+                    }
+                }
+                else if (
+                    offsetX >= element.offsetX &&
+                    offsetY >= element.offsetY &&
+                    offsetX <= element.offsetX + element.width &&
+                    offsetY <= element.offsetY + element.height
+                ) {
+                    setSelectedElementId(element.id);
+                    console.log(`You selected ${element.type}-${element.id}`);
+                    break;
+                }
+            }
+        } else {
+            let newElement;
+            let elementType;
+
+            if (tool === "pencil") {
+                elementType = "pencil";
+                newElement = {
+                    id: generateUniqueId(elementType),
+                    type: elementType,
                     offsetX,
                     offsetY,
                     path: [[offsetX, offsetY]],
                     stroke: color,
-                },
-            ]);
-        } else if (tool === "line") {
-            setElements((prevElements) => [
-                ...prevElements,
-                {
-                    type: "line",
+                };
+            } else if (tool === "line") {
+                elementType = "line";
+                newElement = {
+                    id: generateUniqueId(elementType),
+                    type: elementType,
                     offsetX,
                     offsetY,
                     width: offsetX,
                     height: offsetY,
                     stroke: color,
-                },
-            ]);
-        } else if (tool === "rect") {
-            setElements((prevElements) => [
-                ...prevElements,
-                {
-                    type: "rect",
+                };
+            } else if (tool === "rect") {
+                elementType = "rect";
+                newElement = {
+                    id: generateUniqueId(elementType),
+                    type: elementType,
                     offsetX,
                     offsetY,
                     width: 0,
                     height: 0,
                     stroke: color,
-                },
-            ]);
-        } else if (tool === "circle") {
-            setElements((prevElements) => [
-                ...prevElements,
-                {
-                    type: "circle",
+                };
+            } else if (tool === "circle") {
+                elementType = "circle";
+                newElement = {
+                    id: generateUniqueId(elementType),
+                    type: elementType,
                     offsetX,
                     offsetY,
                     width: 0,
                     height: 0,
                     diameter: 0,
                     stroke: color,
-                },
-            ]);
-        }
+                };
+            }
 
-        setIsDrawing(true);
+            setSelectedElementId(null);
+            setElements((prevElements) => [...prevElements, newElement]);
+            setIsDrawing(true);
+            console.log(`Created element with ID: ${newElement.id}`);
+        }
     };
 
     const handleMouseMove = (e) => {
