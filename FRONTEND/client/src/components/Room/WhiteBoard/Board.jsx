@@ -30,6 +30,26 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
     }, []);
 
     useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === "Backspace" || e.key === "Delete") {
+                if (selectedElementId) {
+                    setElements((prevElements) =>
+                        prevElements.filter((ele) => ele.id !== selectedElementId)
+                    );
+                    setSelectedElementId(null);
+                }
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [selectedElementId, setElements]);
+
+
+    useEffect(() => {
         ctxRef.current.strokeStyle = color;
     }, [color]);
 
@@ -176,9 +196,10 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                           x: element.offsetX,
                           y: element.offsetY,
                         });
-                        setIsElementBeingMoved(false); // Reset the move flag
+                        //reset flags
+                        setIsElementBeingMoved(false);
                         setTimeout(() => {
-                          setIsElementBeingMoved(true); // Set the move flag after 2 seconds
+                          setIsElementBeingMoved(true);
                         }, 2000);
                         break;
                     }
@@ -195,9 +216,9 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                         x: element.offsetX,
                         y: element.offsetY,
                     });
-                    setIsElementBeingMoved(false); // Reset the move flag
+                    setIsElementBeingMoved(false);
                     setTimeout(() => {
-                        setIsElementBeingMoved(true); // Set the move flag after 2 seconds
+                        setIsElementBeingMoved(true);
                     }, 2000);
                     break;
                 }
@@ -280,7 +301,6 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                                     height: ele.height + dy,
                                 };
                             } else {
-                                // For other element types, update their positions accordingly
                                 return {
                                     ...ele,
                                     offsetX: selectedElementInitialPosition.x + offsetX - selectedElementInitialPosition.x,
@@ -367,8 +387,10 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
         setIsDrawing(false);
         setSelectedElementId(null);
         setIsElementBeingMoved(false);
-    };
 
+        
+    };
+        
     return (
         <div
             style={{
