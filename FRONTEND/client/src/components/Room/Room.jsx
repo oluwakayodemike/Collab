@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import "./Room.css"
 import Header from "./Header/Header"
 import Board from "./WhiteBoard/Board";
@@ -6,7 +6,9 @@ import Select from "../../assets/ToolBar/select_cursor.svg";
 import Pencil from "../../assets/ToolBar/pencil.svg";
 import Circle from "../../assets/ToolBar/circle.svg";
 import Rectangle from "../../assets/ToolBar/rectangle.svg";
-import Line from "../../assets/ToolBar/line1.svg";
+import Line from "../../assets/ToolBar/line.svg";
+import Undo from "../../assets/ToolBar/undo.svg";
+import Redo from "../../assets/ToolBar/redo.svg";
 
 const Whiteboard = () => {
     const canvas = useRef(null);
@@ -14,11 +16,40 @@ const Whiteboard = () => {
     const [tool, setTool] = useState("select");
     const [color, setColor] = useState("black");
     const [elements, setElements] = useState([]);
+    const [history, setHistory] = useState([]);
 
     const handleToolClick = (selectedTool) => {
         setTool(selectedTool);
     };
 
+    const undo = () => {
+        if (elements.length === 0) {
+            return;
+        }
+    
+        setHistory((prevHistory) => [
+            ...prevHistory,
+            elements[elements.length - 1],
+        ]);
+    
+        setElements((prevElements) => {
+            const updatedElements = prevElements.slice(0, prevElements.length - 1);
+            ctx.current.clearRect(0, 0, canvas.current.width, canvas.current.height);
+            updatedElements.forEach((element) => {
+            });
+    
+            return updatedElements;
+        });
+    };
+    
+    const redo = () => {
+        setElements((prevElements) =>[
+            ...prevElements,
+            history[history.length - 1],
+        ]);
+        setHistory((prevHistory) => prevHistory.slice(0, prevHistory.length - 1))
+    };
+    
     return (
         <div className='Board'>
             < Header />
@@ -60,6 +91,20 @@ const Whiteboard = () => {
                     alt="Line Tool"
                     onClick={() => handleToolClick("line")}
                     className={tool === "line" ? "selected" : ""}
+                />
+                <div className="separator"></div>
+                <img
+                    src={Undo}
+                    alt="Undo Tool"
+                    disabled={elements.length === 0}
+                    onClick={() => undo()}
+                />
+                <div className="separator"></div>
+                <img
+                    src={Redo}
+                    alt="Redo Tool"
+                    disabled={elements.history < 1}
+                    onClick={() => redo()}
                 />
             </div>
 
