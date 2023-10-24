@@ -16,7 +16,7 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
     const [selectedElementInitialPosition, setSelectedElementInitialPosition] = useState(null);
     const [isElementBeingMoved, setIsElementBeingMoved] = useState(false);
 
-    useEffect(() => {
+    useEffect(() => { 
         const canvas = canvasRef.current;
         canvas.width = window.innerWidth * 2;
         canvas.height = window.innerHeight * 2;
@@ -60,40 +60,41 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
         }
 
         elements.forEach((element) => {
-            if (element.type === "rect") {
-                roughCanvas.draw(
-                    roughGenerator.rectangle(
-                        element.offsetX,
-                        element.offsetY,
-                        element.width,
-                        element.height,
-                        { stroke: element.stroke, strokeWidth: 2, roughness: 0 }
-                    )
-                );
-            } else if (element.type === "line") {
-                roughCanvas.draw(
-                    roughGenerator.line(
-                        element.offsetX,
-                        element.offsetY,
-                        element.width,
-                        element.height,
-                        { stroke: element.stroke, strokeWidth: 2, roughness: 0 }
-                    )
-                );
-            } else if (element.type === "pencil") {
-                roughCanvas.linearPath(element.path, { stroke: element.stroke, strokeWidth: 2, roughness: 0 });
-            } else if (element.type === "circle") {
-                roughCanvas.draw(
-                    roughGenerator.circle(
-                        element.offsetX,
-                        element.offsetY,
-                        element.diameter,
-                        { stroke: element.stroke, strokeWidth: 2, roughness: 0 }
-                    )
-                );
+            if (element && element.type) {
+                if (element.type === "rect") {
+                    roughCanvas.draw(
+                        roughGenerator.rectangle(
+                            element.offsetX,
+                            element.offsetY,
+                            element.width,
+                            element.height,
+                            { stroke: element.stroke, strokeWidth: 2, roughness: 0 }
+                        )
+                    );
+                } else if (element.type === "line") {
+                    roughCanvas.draw(
+                        roughGenerator.line(
+                            element.offsetX,
+                            element.offsetY,
+                            element.width,
+                            element.height,
+                            { stroke: element.stroke, strokeWidth: 2, roughness: 0 }
+                        )
+                    );
+                } else if (element.type === "pencil") {
+                    roughCanvas.linearPath(element.path, { stroke: element.stroke, strokeWidth: 2, roughness: 0 });
+                } else if (element.type === "circle") {
+                    roughCanvas.draw(
+                        roughGenerator.circle(
+                            element.offsetX,
+                            element.offsetY,
+                            element.diameter,
+                            { stroke: element.stroke, strokeWidth: 2, roughness: 0 }
+                        )
+                    );
+                }
             }
-
-            if (element.id === selectedElementId) {
+            if (element && element.id === selectedElementId) {
                 if (element.type === "circle") {
                     const selectionBoxX = element.offsetX - element.diameter / 2 - 5;
                     const selectionBoxY = element.offsetY - element.diameter / 2 - 5;
