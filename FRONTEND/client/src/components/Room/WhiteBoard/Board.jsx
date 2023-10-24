@@ -171,6 +171,31 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
         setElements((prevElements) => [hiddenElement, ...prevElements]);
     }, []);
 
+    useEffect(() => {
+        const handleDocumentClick = (e) => {
+            if (selectedElementId) {
+                const { offsetX, offsetY } = e;
+                const selectedElement = elements.find((ele) => ele.id === selectedElementId);
+                if (
+                    selectedElement &&
+                    (offsetX < selectedElement.offsetX ||
+                        offsetY < selectedElement.offsetY ||
+                        offsetX > selectedElement.offsetX + selectedElement.width ||
+                        offsetY > selectedElement.offsetY + selectedElement.height)
+                ) {
+                    // on click outside element, disselect
+                    setSelectedElementId(null);
+                }
+            }
+        };
+
+        document.addEventListener("click", handleDocumentClick);
+
+        return () => {
+            document.removeEventListener("click", handleDocumentClick);
+        };
+    }, [selectedElementId, elements]);
+
     const handleMouseDown = (e) => {
         const { offsetX, offsetY } = e.nativeEvent;
 
