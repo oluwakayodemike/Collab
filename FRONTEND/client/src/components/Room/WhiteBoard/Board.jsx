@@ -48,7 +48,6 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
         };
     }, [selectedElementId, setElements]);
 
-
     useEffect(() => {
         ctxRef.current.strokeStyle = color;
     }, [color]);
@@ -158,6 +157,19 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
             }
         });
     }, [elements, selectedElementId]);
+
+    useEffect(() => {
+        const hiddenElement = {
+            id: "hidden-element",
+            type: "hidden",
+            offsetX: -9999,
+            offsetY: -9999,
+            width: 1,
+            height: 1,
+            stroke: "transparent",
+        };
+        setElements((prevElements) => [hiddenElement, ...prevElements]);
+    }, []);
 
     const handleMouseDown = (e) => {
         const { offsetX, offsetY } = e.nativeEvent;
@@ -383,14 +395,11 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
         }
     };
 
-    const handleMouseUp = () => {
-        setIsDrawing(false);
-        setSelectedElementId(null);
-        setIsElementBeingMoved(false);
+const handleMouseUp = () => {
+    setIsDrawing(false);
+    setIsElementBeingMoved(false);
+};
 
-        
-    };
-        
     return (
         <div
             style={{
