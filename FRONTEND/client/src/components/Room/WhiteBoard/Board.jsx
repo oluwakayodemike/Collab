@@ -13,6 +13,8 @@ function generateUniqueId(elementType) {
 const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
     const [isDrawing, setIsDrawing] = useState(false);
     const [selectedElementId, setSelectedElementId] = useState(null);
+    const [selectedElementInitialPosition, setSelectedElementInitialPosition] = useState(null);
+    const [isElementBeingMoved, setIsElementBeingMoved] = useState(false);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -170,6 +172,14 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                     if (distance <= element.diameter / 2) {
                         setSelectedElementId(element.id);
                         console.log(`You selected ${element.type}-${element.id}`);
+                        setSelectedElementInitialPosition({
+                          x: element.offsetX,
+                          y: element.offsetY,
+                        });
+                        setIsElementBeingMoved(false); // Reset the move flag
+                        setTimeout(() => {
+                          setIsElementBeingMoved(true); // Set the move flag after 2 seconds
+                        }, 2000);
                         break;
                     }
                 }
@@ -181,6 +191,14 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                 ) {
                     setSelectedElementId(element.id);
                     console.log(`You selected ${element.type}-${element.id}`);
+                    setSelectedElementInitialPosition({
+                        x: element.offsetX,
+                        y: element.offsetY,
+                    });
+                    setIsElementBeingMoved(false); // Reset the move flag
+                    setTimeout(() => {
+                        setIsElementBeingMoved(true); // Set the move flag after 2 seconds
+                    }, 2000);
                     break;
                 }
             }
@@ -244,7 +262,39 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
     const handleMouseMove = (e) => {
         const { offsetX, offsetY } = e.nativeEvent;
 
-        if (isDrawing) {
+        if (isElementBeingMoved) {
+            // Move the selected element based on mouse movement
+            if (selectedElementId) {
+                setElements((prevElements) =>
+                    prevElements.map((ele) => {
+                        if (ele.id === selectedElementId) {
+                            if (ele.type === "line") {
+                                // update the line's position
+                                const dx = offsetX - selectedElementInitialPosition.x;
+                                const dy = offsetY - selectedElementInitialPosition.y;
+                                return {
+                                    ...ele,
+                                    offsetX: selectedElementInitialPosition.x + dx,
+                                    offsetY: selectedElementInitialPosition.y + dy,
+                                    width: ele.width + dx,
+                                    height: ele.height + dy,
+                                };
+                            } else {
+                                // For other element types, update their positions accordingly
+                                return {
+                                    ...ele,
+                                    offsetX: selectedElementInitialPosition.x + offsetX - selectedElementInitialPosition.x,
+                                    offsetY: selectedElementInitialPosition.y + offsetY - selectedElementInitialPosition.y,
+                                };
+                            }
+                        } else {
+                            return ele;
+                        }
+                    })
+                );
+            }
+        }
+        else if (isDrawing) {
             if (tool === "pencil") {
                 const { path } = elements[elements.length - 1];
                 const newPath = [...path, [offsetX, offsetY]];
@@ -315,6 +365,8 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
 
     const handleMouseUp = () => {
         setIsDrawing(false);
+        setSelectedElementId(null);
+        setIsElementBeingMoved(false);
     };
 
     return (
