@@ -7,7 +7,12 @@ import "./Popup.css";
 const JoinPopup = ({ onClose }) => {
   const navigate = useNavigate();
   const [roomID, setRoomID] = useState("");
-  const [userName, setUserName] = useState(getUserName());
+  let userName;
+  try {
+    userName = getUserName();
+  } catch (error) {
+    userName = null; // Set to null if an error occurs
+  }
   const [isNavigating, setIsNavigating] = useState(false);
 
   const JoinPopupClose = () => {
@@ -32,28 +37,45 @@ const JoinPopup = ({ onClose }) => {
           <button className="close-button" onClick={JoinPopupClose}>
             &times;
           </button>
-          <div className="heading">Welcome, {userName}!</div>
-          <div className="code-container">
-            <input
-              type="text"
-              placeholder="Enter Meeting ID"
-              className="input-code"
-              value={roomID}
-              onChange={(e) => setRoomID(e.target.value)}
-            />
-            {isNavigating ? (
-              <div className="loading-spinner"></div>
-            ) : (
-              <button className="join" onClick={handleEnterMeeting}>
-                {isNavigating ? (
-                  <div className="loading-spinner"></div>
-                ) : (
-                  <CgEnter style={{ fontSize: '20px', marginRight: '8px' }} />
-                )}
-                Join
+          {userName ? (
+            <div className="heading">Welcome, {userName}!</div>
+          ) : (
+            <div className="heading">Welcome</div>
+          )}
+          {userName ? (
+            <p></p>
+          ) :(
+            <p className="description">Sorry, but you have to sign in to Join-in with your invite code </p>
+          )}
+          {userName ? (
+            <div className="code-container">
+              <input
+                type="text"
+                placeholder="Enter Meeting ID"
+                className="input-code"
+                value={roomID}
+                onChange={(e) => setRoomID(e.target.value)}
+              />
+              {isNavigating ? (
+                <div className="loading-spinner"></div>
+              ) : (
+                <button className="join" onClick={handleEnterMeeting}>
+                  {isNavigating ? (
+                    <div className="loading-spinner"></div>
+                  ) : (
+                    <CgEnter style={{ fontSize: '20px', marginRight: '8px' }} />
+                  )}
+                  Join
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="code-container">
+              <button className="copy-button signin" onClick={() => navigate('/sign-in')}>
+                Sign In
               </button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </>
