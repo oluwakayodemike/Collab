@@ -7,5 +7,5 @@ export function getUserName() {
     console.log("please Sign In");
   }
 
-  return user.fullName;
+  return user.firstName;
 }

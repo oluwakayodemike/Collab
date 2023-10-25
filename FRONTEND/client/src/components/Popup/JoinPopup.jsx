@@ -7,11 +7,12 @@ import "./Popup.css";
 const JoinPopup = ({ onClose }) => {
   const navigate = useNavigate();
   const [roomID, setRoomID] = useState("");
+
   let userName;
   try {
     userName = getUserName();
   } catch (error) {
-    userName = null; // Set to null if an error occurs
+    userName = null;
   }
   const [isNavigating, setIsNavigating] = useState(false);
 
@@ -43,9 +44,9 @@ const JoinPopup = ({ onClose }) => {
             <div className="heading">Welcome</div>
           )}
           {userName ? (
-            <p></p>
+            <p className="description">Please, Input your Invite Code in the space below to Join Session</p>
           ) :(
-            <p className="description">Sorry, but you have to sign in to Join-in with your invite code </p>
+            <p className="description">Sorry, but you have to sign with your invite code to Join Session </p>
           )}
           {userName ? (
             <div className="code-container">
