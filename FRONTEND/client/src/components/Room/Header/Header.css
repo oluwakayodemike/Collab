@@ -10,9 +10,6 @@
   overflow: hidden;
 }
 
-.end img {
-  margin-left: 13px;
-  width: 27px;
-  height: 27px;
-  user-select: none;
+.leave {
+  padding-left: 10px;
 }
