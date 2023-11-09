@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import rough from "roughjs";
+import { useParams } from "react-router-dom";
 
 const roughGenerator = rough.generator();
 
@@ -16,6 +17,24 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
     const [selectedElementInitialPosition, setSelectedElementInitialPosition] = useState(null);
     const [isElementBeingMoved, setIsElementBeingMoved] = useState(false);
 
+    const { id: meetingID } = useParams();
+
+    // save whiteboard to Local Storage
+    const saveStateToLocalStorage = () => {
+        const stateToSave = { meetingID, elements };
+        localStorage.setItem(`whiteboardState-${meetingID}`, JSON.stringify(stateToSave));
+    };
+
+    // load the whiteboard state
+    const loadStateFromLocalStorage = () => {
+        const storedState = localStorage.getItem(`whiteboardState-${meetingID}`);
+        if (storedState) {
+            const parsedState = JSON.parse(storedState);
+            setElements(parsedState.elements);
+        }
+    };
+
+
     useEffect(() => { 
         const canvas = canvasRef.current;
         canvas.width = window.innerWidth * 2;
@@ -27,7 +46,11 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
         ctx.lineCap = "round";
 
         ctxRef.current = ctx;
-    }, []);
+        
+        // load state from the local storage when the component is mounted at first
+        loadStateFromLocalStorage();
+    }, [meetingID]);
+
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -51,6 +74,11 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
     useEffect(() => {
         ctxRef.current.strokeStyle = color;
     }, [color]);
+
+    useEffect(() => {
+        // save state to localStorage when elements change
+        saveStateToLocalStorage();
+    }, [meetingID, elements]);
 
     useLayoutEffect(() => {
         const roughCanvas = rough.canvas(canvasRef.current);
@@ -238,7 +266,7 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                         setIsElementBeingMoved(false);
                         setTimeout(() => {
                           setIsElementBeingMoved(true);
-                        }, 2000);
+                        }, 100);
                         break;
                     }
                 }

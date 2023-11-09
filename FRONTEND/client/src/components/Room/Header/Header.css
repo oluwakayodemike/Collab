@@ -1,10 +1,15 @@
 .custom-navbar {
-  position: fixed;
+  position: flex;
   width: 100%;
-  background-color: grey;
-  color: white;
+  background-color: white;
+  border: 2px solid black;
+  color: black;
   padding: 0;
   z-index: 100;
   border-radius: 25px;
   overflow: hidden;
+}
+
+.leave {
+  padding-left: 10px;
 }

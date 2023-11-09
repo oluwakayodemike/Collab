@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import "./Room.css"
+import "./Room.css";
 import Header from "./Header/Header"
 import Board from "./WhiteBoard/Board";
 import Select from "../../assets/ToolBar/select_cursor.svg";
@@ -13,11 +13,11 @@ import Redo from "../../assets/ToolBar/redo.svg";
 const Whiteboard = () => {
     const canvas = useRef(null);
     const ctx = useRef(null);
-    const [tool, setTool] = useState("select");
+    const [tool, setTool] = useState("pencil");
     const [color, setColor] = useState("black");
     const [elements, setElements] = useState([]);
     const [history, setHistory] = useState([]);
-
+    
     const handleToolClick = (selectedTool) => {
         setTool(selectedTool);
     };
