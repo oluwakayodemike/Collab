@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './NavBar.css';
 import { useNavigate } from 'react-router-dom';
 import { useUser, UserButton } from "@clerk/clerk-react";
+import Logo from "../../assets/Homepage/logo.png";
 
 const NavBar = () => {
     const user = useUser();
@@ -55,8 +56,7 @@ const NavBar = () => {
         <nav className={`navbar navbar-expand-lg navbar-custom ${isDarkMode ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}>
             <div className="container">
                 <a className="navbar-brand" href="#">
-                    <img src="" alt="Logo" width="30" height="30" className="d-inline-block align-top" />
-                    Collab
+                    <img src={Logo} alt="Logo" width="195" height="55" className="d-inline-block align-top" />
                 </a>
                 <div className="ml-auto">
                     <i

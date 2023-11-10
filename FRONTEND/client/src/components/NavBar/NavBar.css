@@ -1,5 +1,9 @@
 .navbar-custom {
   position: fixed;
+  background-color: white;
+  border: 2px solid black;
+  color: black; 
+  border-radius: 25px;
   top: 0;
   left: 0;
   right: 0;
@@ -7,9 +11,8 @@
   transition: color 0.5s ease-in-out, background-color 0.5s ease-in-out;
 }
 
-.navbar-custom .navbar-brand {
-  font-size: 2px;
-  font-family: 'Pacifico', cursive;
+.navbar-brand .img{
+  user-select: none;
 }
 
 .navbar-custom .fa-icon {
