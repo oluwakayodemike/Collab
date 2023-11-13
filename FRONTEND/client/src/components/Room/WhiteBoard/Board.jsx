@@ -282,10 +282,7 @@ const Board = ({ canvasRef, ctxRef, elements, setElements, tool, color }) => {
                         x: element.offsetX,
                         y: element.offsetY,
                     });
-                    setIsElementBeingMoved(false);
-                    setTimeout(() => {
-                        setIsElementBeingMoved(true);
-                    }, 2000);
+                    setIsElementBeingMoved(true);
                     break;
                 }
             }
