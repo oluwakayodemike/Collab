@@ -79,7 +79,7 @@ const Home = () => {
               <ImageSlider images={images} className="rounded-circle" />
             </div>
             <div className="text-container">
-              <p>Just Descriptionssssssss</p>
+              {/* <p>Just Descriptionssssssss</p> */}
             </div>
           </div>
           {showPopup && <Popup onClose={handlePopupClose} />}
