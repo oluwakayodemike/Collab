@@ -71,15 +71,11 @@ Before installation, please make sure you have already installed the following t
 
 Check out the website: [Collab](https://Collab.brimble.app/)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 ## 👩🏽‍💻 Contributing
 
 - Contributions make the open source community such an amazing place to learn, inspire, and create.
 - Any contributions you make are greatly appreciated.
 - Check out our [contribution guidelines](/CONTRIBUTING.md) for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## 🛡️ License
 
@@ -90,8 +86,6 @@ Whisper is licensed under the MIT License - see the [LICENSE](LICENSE) file for 
 Thanks a lot for spending your time helping Collab grow. Thanks a lot! Keep rocking🍻
 
 <!-- [![Contributors](https://contrib.rocks/image?repo=Dun-sin/Whisper)](https://github.com/oluwakayodemike/collab/graphs/contributors) -->
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## 🙏🏽 Support
 
