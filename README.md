@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="" width="120px">
+  <img src="https://github.com/oluwakayodemike/Collab/assets/104535663/57f5aeb8-1f3e-419e-b81b-fb28e1a04b48" width="250px">
   <h2>Collab</h2>
   <p>Online Whiteboard that allows users to Draw</p>
 
@@ -14,6 +14,7 @@
 
 ## Collab
 
+
 This is supposed to be an Online Whiteboard for collaboration (Google Meet for Drawing, haha)!.
 
 ### ✨ Built With
@@ -23,7 +24,7 @@ This is supposed to be an Online Whiteboard for collaboration (Google Meet for D
 
 ### 🖼️ Screenshot
 
-![image](https://demo.png)
+![image](https://github.com/oluwakayodemike/Collab/assets/104535663/f6d2c36a-1b0c-4285-9ac6-c70d550126af)
 
 ## 📚 Getting Started
 
