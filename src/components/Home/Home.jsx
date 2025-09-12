@@ -9,6 +9,7 @@ import slideThree from "../../assets/Homepage/privacy.svg";
 import Popup from "../Popup/Popup";
 import { getUserName } from "../../libs/getUserName";
 import JoinPopup from "../Popup/JoinPopup";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const images = [slideOne, slideTwo, slideThree];
 
@@ -16,6 +17,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
   const [showJoinPopup, setShowJoinPopup] = useState(false);
+  const { isDarkMode } = useTheme();
 
   const handlePopupClose = () => {
     setShowPopup(false);
