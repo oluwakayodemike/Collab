@@ -3,11 +3,12 @@ import './NavBar.css';
 import { useNavigate } from 'react-router-dom';
 import { useUser, UserButton } from "@clerk/clerk-react";
 import Logo from "../../assets/Homepage/logo.png";
+import { useTheme } from '../../contexts/ThemeContext';
 
 const NavBar = () => {
     const user = useUser();
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const { isDarkMode, toggleDarkMode } = useTheme();
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -29,10 +30,6 @@ const NavBar = () => {
     };
 
     const formattedDate = new Intl.DateTimeFormat('en-US', options).format(currentDateTime);
-
-    const toggleDarkMode = () => {
-        setIsDarkMode(!isDarkMode);
-    };
 
     const dateClasses = `mr-2 ${isDarkMode ? 'text-light' : ''}`;
     const iconColor = isDarkMode ? 'white' : 'black';
